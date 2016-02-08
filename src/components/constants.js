@@ -1,0 +1,42 @@
+exports.AllowedMetricUnits = [
+    'Seconds',
+    'Microseconds',
+    'Milliseconds',
+    'Bytes',
+    'Kilobytes',
+    'Megabytes',
+    'Gigabytes',
+    'Terabytes',
+    'Bits',
+    'Kilobits',
+    'Megabits',
+    'Gigabits',
+    'Terabits',
+    'Percent',
+    'Count',
+    'Bytes/Second',
+    'Kilobytes/Second',
+    'Megabytes/Second',
+    'Gigabytes/Second',
+    'Terabytes/Second',
+    'Bits/Second',
+    'Kilobits/Second',
+    'Megabits/Second',
+    'Gigabits/Second',
+    'Terabits/Second',
+    'Count/Second',
+    'None'
+];
+
+exports.AllowedRegions = [
+    'us-east-1',
+    'us-west-2',
+    'us-west-1',
+    'eu-west-1',
+    'eu-central-1',
+    'ap-southeast-1',
+    'ap-northeast-1',
+    'ap-southeast-2',
+    'ap-northeast-2',
+    'sa-east-1'
+];
