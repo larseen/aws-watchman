@@ -1,7 +1,7 @@
 import { AllowedMetricUnits, AllowedRegions } from './constants';
 
 module.exports.watchmanSchema = {
-    nameSpace: {
+    NameSpace: {
         default: 'Watchman',
         required: true,
         type: "string"
@@ -27,33 +27,34 @@ module.exports.watchmanSchema = {
 
 }
 
-export function metricSchema(Watchman) {
+export function metricSchema(config) {
     return {
-        Namespace: {        // String, The container or category for the metric
+        NameSpace: {        // String, The container or category for the metric
             required: true,
-            default: Watchman.namespace,
-            type: String
+            default: config.NameSpace,
+            type: "string"
         },
         MetricName: {       // String, The metric name
             required: true,
-            type: String
+            type: "string"
         },
-        Dimensions: {       // Array, A list of dimensions associated with the metric
-            type: Array,
+        Dimensions: {      // Array, A list of dimensions associated with the metric
+            type: "object",
             required: false,
+            default: [],
             Schema: {
                 Name: {     // String, The name of the dimension.
-                    required: true,
-                    type: String
+                    required: false,
+                    type: "string"
                 },
                 Value: {    // String, The value representing the dimension measurement
-                    required: true,
-                    type: String
+                    required: false,
+                    type: "string"
                 }
             }
         },
         Unit: {             // String, The unit of the metric.
-            type: String,
+            type: "string",
             required: false,
             default: 'None',
             validate : function(unit){
@@ -62,22 +63,22 @@ export function metricSchema(Watchman) {
         },
         StatisticValues: {  // Object, A set of statistical values describing the metric.
             Maximum: {      // Float, The maximum value of the sample set.
-                type: Number,
+                type: "number",
                 required: true,
                 default: 0.0
             },
             Minimum: {      // Float, The minimum value of the sample set.
-                type: Number,
+                type: "number",
                 required: true,
                 default: 0.0
             },
             SampleCount: {  // Float, The number of samples used for the statistic set.
-                type: Number,
+                type: "number",
                 required: true,
                 default: 0.0
             },
             Sum: {           // Float, The sum of values for the sample set.
-                type: Number,
+                type: "number",
                 required: true,
                 default: 0.0
             }

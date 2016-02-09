@@ -12,7 +12,7 @@ describe('#Watchman', () => {
         it('should create a valid Watchman', done => {
 
             const config = {
-                nameSpace: 'aws-watchman',
+                NameSpace: 'aws-watchman',
                 aws: {
                     accessKeyId: '214rihjonfofn',
                     secretAccessKey: '3i2hjro3ofn2oin2'
@@ -21,7 +21,7 @@ describe('#Watchman', () => {
 
             // Should add some checks here?
             const watchman = new Watchman(config);
-            watchman.config.nameSpace.should.equal(config.nameSpace);
+            watchman.config.NameSpace.should.equal(config.NameSpace);
             watchman.config.aws.accessKeyId.should.equal(config.aws.accessKeyId);
             watchman.config.aws.secretAccessKey.should.equal(config.aws.secretAccessKey);
             watchman.config.aws.region.should.equal('eu-west-1');
@@ -32,7 +32,7 @@ describe('#Watchman', () => {
         it('should throw a MissingRequiredValue Error', done => {
 
             const config = {
-                nameSpace: 'aws-watchman',
+                NameSpace: 'aws-watchman',
                 aws: {
                     accessKeyId: '214rihjonfofn',
                 }
@@ -48,7 +48,7 @@ describe('#Watchman', () => {
         it('should throw a NotValidType Error', done => {
 
             const config = {
-                nameSpace: 'aws-watchman',
+                NameSpace: 'aws-watchman',
                 aws: {
                     accessKeyId: '214rihjonfofn',
                     secretAccessKey: 123124124312341
@@ -65,7 +65,7 @@ describe('#Watchman', () => {
         it('should throw a NotValidProperty Error', done => {
 
             const config = {
-                nameSpace: 'aws-watchman',
+                NameSpace: 'aws-watchman',
                 aws: {
                     region: 'northpole',
                     accessKeyId: '214rihjonfofn',

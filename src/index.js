@@ -2,7 +2,8 @@ import AWS from 'aws-sdk';
 import Bluebird from 'bluebird';
 import { validate } from './components/functions';
 import { watchmanSchema } from './components/schemas';
-import Metrics from './metrics';
+import Metric from './metric';
+Bluebird.promisifyAll(AWS);
 
 class Watchman {
 
@@ -10,12 +11,14 @@ class Watchman {
 
         this.config = validate(config, watchmanSchema)
         this.CloudWatch = new AWS.CloudWatch(this.config.aws)
-        this.Metrics = new Metrics(this.CloudWatch, this.config);
+        this.metrics = {}
 
     }
 
-    newMetric(name){
-
+    newMetric(metric){
+        const _metric = new Metric(this.CloudWatch,this.config, metric)
+        this.metrics[_metric.MetricName] = _metric;
+        return _metric
     }
 
     putMetric(name){

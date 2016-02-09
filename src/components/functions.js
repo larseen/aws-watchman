@@ -14,7 +14,8 @@ function _validateField(configValue, schemaValue, key){
     let _type = schemaValue.type;
     let _validate = schemaValue.validate;
 
-    if(!configValue){
+
+    if(_value === undefined || _value === null){
 
         if(_required && _default){
             return _default;
@@ -46,16 +47,17 @@ function _validateField(configValue, schemaValue, key){
 
 function _validateProperty(configValue, schemaValue, key){
 
-
-    if(schemaValue['required']) return _validateField(configValue, schemaValue, key)
+    if('required' in schemaValue) return _validateField(configValue, schemaValue, key)
     else{
 
         let _configObject = {};
 
-        _.mapKeys(schemaValue, function(_schemaValue, _schemaKey) {
+        _.forEach(schemaValue, function(_schemaValue, _schemaKey) {
             const _configValue = configValue[_schemaKey]
             _configObject[_schemaKey] = _validateProperty(_configValue, _schemaValue, _schemaKey)
         });
+
+
 
         return _configObject
     }
@@ -65,7 +67,7 @@ export function validate(config, schema){
 
     _config = {};
 
-    _.mapKeys(schema, function(_schemaValue, _schemaKey) {
+    _.forEach(schema, function(_schemaValue, _schemaKey) {
         const _configValue = config[_schemaKey]
         _config[_schemaKey] = _validateProperty(_configValue, _schemaValue, _schemaKey);
     });
