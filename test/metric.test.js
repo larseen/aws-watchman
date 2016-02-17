@@ -146,7 +146,7 @@ describe('#Metrics', () => {
                 Value: 1
             };
             const count = watchman.newMetric(metric);
-            count.putMetrics([data,data,data,data,data])
+            count.putMetrics([data, data, data, data, data])
                 .then(response => {
                     response.should.have.property('ResponseMetadata');
                     done();
@@ -165,7 +165,7 @@ describe('#Metrics', () => {
                 Timestamp: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
             };
             const count = watchman.newMetric(metric);
-            count.putMetrics([data,data,data,data,data])
+            count.putMetrics([data, data, data, data, data])
                 .then(response => {
                     response.should.have.property('ResponseMetadata');
                     done();
@@ -186,7 +186,7 @@ describe('#Metrics', () => {
                 }
             };
             const count = watchman.newMetric(metric);
-            count.putMetrics([data,data,data,data,data])
+            count.putMetrics([data, data, data, data, data])
                 .then(response => {
                     response.should.have.property('ResponseMetadata');
                     done();

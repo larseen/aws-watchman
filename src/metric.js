@@ -26,9 +26,7 @@ class Metric {
     }
 
     putMetrics(metricsData) {
-        return Promise.map(metricsData, _metricData => {
-            return this._validateMetricData(_metricData)
-        })
+        return Promise.map(metricsData, _metricData => this._validateMetricData(_metricData))
         .then(_metricData => {
             const params = {
                 MetricData: _metricData,
