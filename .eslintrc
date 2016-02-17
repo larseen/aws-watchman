@@ -1,0 +1,15 @@
+{
+    "extends": "webkom",
+    "parser": "babel-eslint",
+    "env": {
+        "node": true,
+        "mocha": true
+    },
+    "rules": {
+        "indent": [2, 4],
+        "arrow-body-style": [2,"as-needed"],
+        "new-cap": 0,
+        "no-new": 0,
+        "func-names": 0
+    }
+}

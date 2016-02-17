@@ -1,32 +1,45 @@
-import _ from 'lodash';
-import { metricSchema } from './components/schemas'
+import Promise from 'bluebird';
+import { metricSchema, metricDataSchema } from './components/schemas';
 import { validate } from './components/functions';
 
 class Metric {
-
-
-    constructor(CloudWatch, config, metric){
-
+    constructor(CloudWatch, config, metric) {
         this.CloudWatch = CloudWatch;
-        const _metric = validate(metric, metricSchema(config))
-        this.config = _metric;
+        this.config = validate(metric, metricSchema(config));
         return this;
-
     }
 
-    putMetric(data){
-        const _data = createMetricData(data);
-        return this.CloudWatch.putMetricDataAsync(_data)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(err => {
+    _validateMetricData(metricData) {
+        return validate(metricData, metricDataSchema(this.config, metricData));
+    }
+
+    putMetric(metricData) {
+        const _metricData = this._validateMetricData(metricData);
+        const params = {
+            MetricData: [_metricData],
+            Namespace: this.config.Namespace
+        };
+        return this.CloudWatch.putMetricDataAsync(params)
+            .catch(err => { // need to catch and thorw transform errors
                 console.log(err);
-            })
+            });
     }
 
+    putMetrics(metricsData) {
+        return Promise.map(metricsData, _metricData => this._validateMetricData(_metricData))
+        .then(_metricData => {
+            const params = {
+                MetricData: _metricData,
+                Namespace: this.config.Namespace
+            };
+            return this.CloudWatch.putMetricDataAsync(params)
+                .catch(err => { // need to catch and thorw transform errors
+                    console.log(err);
+                });
+        });
+    }
 
 
 }
 
-export default Metric
+export default Metric;

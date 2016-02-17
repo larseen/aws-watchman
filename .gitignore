@@ -1,11 +1,11 @@
-node_modules
+node_modules/
+coverage/
+dist/
+.nyc_output/
+npm-debug.log
 .tmp
 .idea
-/src/config/local.env.js
 .DS_Store
-npm-debug.log
-
-
 #vim
 *.swp
 *.swo
