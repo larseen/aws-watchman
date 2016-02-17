@@ -9,9 +9,9 @@ describe('#Metrics', () => {
             secretAccessKey: Config.secretAccessKey
         }
     };
+    const watchman = new Watchman(config);
 
     describe('Create a new metric', () => {
-        const watchman = new Watchman(config);
         const metric = {
             MetricName: 'Emails sent'
         };
@@ -60,8 +60,6 @@ describe('#Metrics', () => {
     });
     describe('Put single metric data', () => {
         it('should add a count to the metric Count', done => {
-            const watchman = new Watchman(config);
-
             const metric = {
                 MetricName: 'Count',
                 Unit: 'Count'
@@ -78,9 +76,7 @@ describe('#Metrics', () => {
                 });
         });
 
-        it('should be able to specify timespamp.', done => {
-            const watchman = new Watchman(config);
-
+        it('should be able to specify timestamp.', done => {
             const metric = {
                 MetricName: 'Count',
                 Unit: 'Count'
@@ -101,8 +97,6 @@ describe('#Metrics', () => {
         });
 
         it('should add bytes to the metric DataProccessed', done => {
-            const watchman = new Watchman(config);
-
             const metric = {
                 MetricName: 'DataProccessed',
                 Unit: 'Bytes'
@@ -120,8 +114,6 @@ describe('#Metrics', () => {
         });
 
         it('should add StatisticValues to the metric DataProccessed', done => {
-            const watchman = new Watchman(config);
-
             const metric = {
                 MetricName: 'DataProccessed',
                 Unit: 'Bytes'
@@ -137,6 +129,64 @@ describe('#Metrics', () => {
             };
             const count = watchman.newMetric(metric);
             count.putMetric(data)
+                .then(response => {
+                    response.should.have.property('ResponseMetadata');
+                    done();
+                });
+        });
+    });
+    describe('Put multiple metric data', () => {
+        it('should add multiple count to the metric Count', done => {
+            const metric = {
+                MetricName: 'Count',
+                Unit: 'Count'
+            };
+
+            const data = {
+                Value: 1
+            };
+            const count = watchman.newMetric(metric);
+            count.putMetrics([data,data,data,data,data])
+                .then(response => {
+                    response.should.have.property('ResponseMetadata');
+                    done();
+                });
+        });
+        it('should be able to specify timestamp.', done => {
+            const metric = {
+                MetricName: 'Count',
+                Unit: 'Count'
+            };
+
+            const today = new Date();
+
+            const data = {
+                Value: 1,
+                Timestamp: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
+            };
+            const count = watchman.newMetric(metric);
+            count.putMetrics([data,data,data,data,data])
+                .then(response => {
+                    response.should.have.property('ResponseMetadata');
+                    done();
+                });
+        });
+        it('should add multiple StatisticValues to the metric DataProccessed', done => {
+            const metric = {
+                MetricName: 'DataProccessed',
+                Unit: 'Bytes'
+            };
+
+            const data = {
+                StatisticValues: {
+                    Maximum: 42,
+                    Minimum: 11,
+                    Sum: 200,
+                    SampleCount: 7
+                }
+            };
+            const count = watchman.newMetric(metric);
+            count.putMetrics([data,data,data,data,data])
                 .then(response => {
                     response.should.have.property('ResponseMetadata');
                     done();
