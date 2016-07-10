@@ -40,7 +40,7 @@
     "eslint-config-webkom": "^1.2.0",
     "mocha": "^2.3.3",
     "istanbul": "^0.4.2",
-    "nyc": "^6.6.1"
+    "nyc": "^7.0.0"
   },
   "repository": {
     "type": "git",
